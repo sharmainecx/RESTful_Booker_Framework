@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org">
+<suite name="Restful Booker Suite" parallel="none">
+    <test name="Booking Management">
+        <classes>
+            <class name="tests.CreateBooking" />
+            <class name="tests.GetBooking" />
+        </classes>
+    </test>
+</suite>
