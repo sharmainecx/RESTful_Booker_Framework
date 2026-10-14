@@ -5,6 +5,7 @@ public class TestContext {
     private static final ThreadLocal<TestContext> instance = ThreadLocal.withInitial(TestContext::new);
 
     private int bookingId;
+    private String token;
 
     private TestContext(){
 
@@ -20,5 +21,13 @@ public class TestContext {
 
     public void setBookingId(int bookingId){
         this.bookingId = bookingId;
+    }
+
+    public String getToken(){
+        return token;
+    }
+
+    public void setToken(String token){
+        this.token = token;
     }
 }

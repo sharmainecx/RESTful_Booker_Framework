@@ -1,5 +1,6 @@
 package tests;
 
+import Context.TestContext;
 import constants.Endpoints;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -14,11 +15,9 @@ import static io.restassured.RestAssured.given;
 
 public class Login extends BasePage{
 
-    public static String token;
     @Test
     public void authLogin()
     {
-
         Map<String, String> hm = new HashMap<>();
         hm.put("username", ConfigReader.getUsername());
         hm.put("password", ConfigReader.getPassword());
@@ -33,6 +32,6 @@ public class Login extends BasePage{
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.getContentType(), "application/json; charset=utf-8");
 
-        token = response.jsonPath().getString("token");
+        TestContext.getInstance().setToken(response.jsonPath().getString("token"));
     }
 }

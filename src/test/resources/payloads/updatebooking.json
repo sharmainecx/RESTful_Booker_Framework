@@ -1,0 +1,11 @@
+{
+  "firstname" : "Barry",
+  "lastname" : "Allen",
+  "totalprice" : 324,
+  "depositpaid" : false,
+  "bookingdates" : {
+    "checkin" : "2019-02-10",
+    "checkout" : "2019-01-01"
+  },
+  "additionalneeds" : "Breakfast"
+}
