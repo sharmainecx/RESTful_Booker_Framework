@@ -3,7 +3,7 @@ name: RestAssured API Regression Tests
 # 1. Trigger the workflow on pushes or pull requests to the main branch, or manually
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main", "Working-Branch" ]
 #  pull_request:
 #    branches: [ "main", "master" ]
   workflow_dispatch: # Allows you to click a "Run workflow" button in GitHub
