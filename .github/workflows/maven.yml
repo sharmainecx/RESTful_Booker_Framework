@@ -34,7 +34,7 @@ jobs:
       - name: Publish Test Report Summary
         if: always() # Ensures logs publish even if a test case fails
         run: |
-          # 1. Look inside the Surefire XML file to pull total tests, failures, and errors dynamically
+        # 1. Look inside the Surefire XML file to pull total tests, failures, and errors dynamically
           TOTAL_TESTS=$(grep -oP 'tests="\K[0-9]+' target/surefire-reports/testng-results.xml | head -n 1)
           FAILURES=$(grep -oP 'failed="\K[0-9]+' target/surefire-reports/testng-results.xml | head -n 1)
           SKIPPED=$(grep -oP 'skipped="\K[0-9]+' target/surefire-reports/testng-results.xml | head -n 1)
