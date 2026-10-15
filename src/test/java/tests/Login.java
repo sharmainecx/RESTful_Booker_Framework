@@ -3,6 +3,7 @@ package tests;
 import Context.TestContext;
 import constants.Endpoints;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -24,6 +25,7 @@ public class Login extends BasePage{
 
         Response response = given()
                 .spec(requestSpec)
+                .header("Content-Type", "application/json")
                 .body(hm)
                 .log().uri()
                 .when()
