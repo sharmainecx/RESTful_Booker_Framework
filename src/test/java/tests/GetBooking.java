@@ -15,6 +15,7 @@ public class GetBooking extends BasePage{
 
         given()
                 .spec(requestSpec)
+                .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
                 .when()
                 .get(Endpoints.GetBooking, id)

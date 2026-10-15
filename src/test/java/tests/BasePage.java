@@ -20,7 +20,7 @@ public class BasePage {
         RestAssured.baseURI = ConfigReader.getBaseUrl();
 
         requestSpec = new RequestSpecBuilder()
-                .setContentType(ContentType.JSON)
+//                .setContentType(ContentType.JSON)
                 .build();
     }
 }

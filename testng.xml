@@ -2,8 +2,14 @@
 <suite name="Restful Booker Suite" parallel="none">
     <test name="Booking Management">
         <classes>
+            <class name="tests.Login" />
             <class name="tests.CreateBooking" />
             <class name="tests.GetBooking" />
+            <class name="tests.UpdateBooking" />
+            <class name="tests.DeleteBooking" />
+
+            <class name="tests.CreateBookingXML" />
+
         </classes>
     </test>
 </suite>
