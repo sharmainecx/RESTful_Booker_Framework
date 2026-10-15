@@ -34,18 +34,32 @@ jobs:
       - name: Publish Test Report Summary
         if: always() # Ensures logs publish even if a test case fails
         run: |
-            TOTAL_TESTS=$(grep -oP 'tests="\K[0-9]+' target/surefire-reports/testng-results.xml | head -n 1)
-            FAILURES=$(grep -oP 'failed="\K[0-9]+' target/surefire-reports/testng-results.xml | head -n 1)
-            SKIPPED=$(grep -oP 'skipped="\K[0-9]+' target/surefire-reports/testng-results.xml | head -n 1)
-            
-            if [ "$FAILURES" -eq "0" ]; then
-              STATUS_EMOJI="✅ **All tests executed successfully!**"
-            else
-              STATUS_EMOJI="❌ **Test suite execution failed! Please review logs.**"
-            fi
-            
-            echo "### 📊 RestAssured API Test Results" >> $GITHUB_STEP_SUMMARY
-            echo "$STATUS_EMOJI" >> $GITHUB_STEP_SUMMARY
-            echo "- **Total Tests Run:** $TOTAL_TESTS" >> $GITHUB_STEP_SUMMARY
-            echo "- **Failures:** $FAILURES" >> $GITHUB_STEP_SUMMARY
-            echo "- **Skipped:** $SKIPPED" >> $GITHUB_STEP_SUMMARY
+        # Path to TestNG report file
+          REPORT_FILE="target/surefire-reports/testng-results.xml"
+
+        # Extract metrics safely from TestNG XML schema (uses 'total', 'failed', 'skipped')
+          TOTAL_TESTS=$(grep -oP 'total="\K[0-9]+' "$REPORT_FILE" | head -n 1)
+          FAILURES=$(grep -oP 'failed="\K[0-9]+' "$REPORT_FILE" | head -n 1)
+          SKIPPED=$(grep -oP 'skipped="\K[0-9]+' "$REPORT_FILE" | head -n 1)
+
+        # Fallback to 0 if variables are empty to prevent script crashes
+          TOTAL_TESTS=${TOTAL_TESTS:-0}
+          FAILURES=${FAILURES:-0}
+          SKIPPED=${SKIPPED:-0}
+
+        # Calculate Passed Tests
+          PASSED=$((TOTAL_TESTS - FAILURES - SKIPPED))
+
+          if [ "$FAILURES" -eq "0" ]; then
+          STATUS_EMOJI="✅ **All tests executed successfully!**"
+          else
+          STATUS_EMOJI="❌ **Test suite execution failed! Please review logs.**"
+          fi
+
+          echo "### 📊 RestAssured API Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "$STATUS_EMOJI" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Total Tests Run:** $TOTAL_TESTS" >> $GITHUB_STEP_SUMMARY
+          echo "- **Passed:** $PASSED" >> $GITHUB_STEP_SUMMARY
+          echo "- **Failures:** $FAILURES" >> $GITHUB_STEP_SUMMARY
+          echo "- **Skipped:** $SKIPPED" >> $GITHUB_STEP_SUMMARY
